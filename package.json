@@ -1,0 +1,40 @@
+{
+    "name": "ts-project-references",
+    "version": "1.0.0",
+    "private": true,
+    "workspaces": [
+        "server",
+        "client",
+        "shared"
+    ],
+    "license": "MIT",
+    "scripts": {
+        "lint": "eslint -c .eslintrc.all --ext '.js,.ts,.tsx' .",
+        "build": "yarn build:typescript && yarn build:server && yarn build:client",
+        "build:typescript": "tsc -b",
+        "build:server": "NODE_ENV=production webpack-cli --config server/webpack.config.js",
+        "build:client": "NODE_ENV=production webpack-cli --config client/webpack.config.js",
+        "start": "concurrently -k -n client,server \"yarn start:client\" \"yarn start:server\"",
+        "watch:typescript": "yarn tsc --watch --preserveWatchOutput | awk '{gsub(/\\033c/,\"\") system(\"\")}1'",
+        "start:server": "yarn webpack-cli --mode=development -w --devtool=eval-source-map --config server/webpack.config.js",
+        "start:client": "webpack-dev-server --config client/webpack.config.js",
+        "test": "jest"
+    },
+    "dependencies": {
+        "@manypkg/cli": "^0.15.0",
+        "@types/jest": "^26.0.10",
+        "@types/react": "^16.9.48",
+        "@typescript-eslint/eslint-plugin": "^3.10.1",
+        "@typescript-eslint/parser": "^3.10.1",
+        "concurrently": "^5.3.0",
+        "eslint": "^7.7.0",
+        "eslint-config-prettier": "^6.11.0",
+        "jest": "^26.4.2",
+        "ts-jest": "^26.3.0",
+        "ts-loader": "^8.0.3",
+        "typescript": "^4.0.2",
+        "webpack": "^4.44.1",
+        "webpack-cli": "^3.3.12",
+        "webpack-dev-server": "^3.11.0"
+    }
+}
